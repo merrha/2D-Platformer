@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,7 +9,9 @@ public class PlayerMotor : MonoBehaviour
     public float stoppingForce = 10;
     public float maxSpeedX = 10;
     public float stoppingPoint = 0.1f;
+    public BoxCollider2D groundCheckBox;
     private Rigidbody2D rb;
+    private bool canJump = true;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -54,6 +57,15 @@ public class PlayerMotor : MonoBehaviour
 
     private void OnJump()
     {
-        rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        if (canJump)
+        {
+            rb.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+            canJump = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        canJump = true;
     }
 }
