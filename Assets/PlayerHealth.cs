@@ -9,12 +9,19 @@ public class PlayerHealth : MonoBehaviour
     private bool CanRecieveDamage = true;
     public float invincibilityTimer = 2;
 
+   
     public delegate void HealthChangedHandler(float newHealth,float ammountChanged);
     public event HealthChangedHandler OnHealthChanged;
+    public delegate void HealthInitHandler  (float newHealth);
+    public event HealthInitHandler OnHealthInit;
+ 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Health = MaxHealth;
+        OnHealthInit?.Invoke(Health);
+       
     }
 
     // Update is called once per frame
@@ -25,6 +32,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void AddDamage(float damage)
     {
+      
         if (CanRecieveDamage) 
         {
             Health -= damage;
@@ -33,7 +41,7 @@ public class PlayerHealth : MonoBehaviour
             StartCoroutine(InvincibilityTimer(invincibilityTimer,ResetInvincibility)); 
         }
        
-        Debug.Log(Health);
+       
 
     }
     private void ResetInvincibility()
@@ -46,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         callback.Invoke();
-        Debug.Log(CanRecieveDamage);
+        
     }
 
     public void AddHealth(float healthToAdd)
