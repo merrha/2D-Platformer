@@ -5,6 +5,7 @@ public class CoinPlayer : MonoBehaviour
 
     public float StartingCoins = 0;
     private float Coins;
+    public PlayerHealth HealthComp;
    
    
 
@@ -37,8 +38,15 @@ public class CoinPlayer : MonoBehaviour
     {
 
         Coins += coinsToAdd;
-        OnCoinsChanged?.Invoke(Coins, coinsToAdd);
 
-       
+        if (Coins == 10)
+        {
+            Coins = Coins - 10;
+            HealthComp.AddHealth(10);
+        }
+
+
+        OnCoinsChanged?.Invoke(Coins, coinsToAdd);
     }
+    
 }
