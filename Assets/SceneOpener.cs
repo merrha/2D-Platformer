@@ -9,5 +9,13 @@ public class SceneOpener : MonoBehaviour
 
     {
         SceneManager.LoadScene(sceneName);
+
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SceneManager.LoadScene(sceneName);
+
+    }
+
 }

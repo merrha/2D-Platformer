@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class PlayerHealth : MonoBehaviour
     private float Health;
     private bool CanRecieveDamage = true;
     public float invincibilityTimer = 2;
+    public string sceneName;
 
    
     public delegate void HealthChangedHandler(float newHealth,float ammountChanged);
@@ -27,7 +29,10 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Health == 0)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
     public void AddDamage(float damage)
