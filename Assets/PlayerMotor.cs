@@ -9,7 +9,9 @@ public class PlayerMotor : MonoBehaviour
     public float speed = 5;
     public float jumpForce = 10;
     public float max_speed = 10;
-    public float stoppingForce = 5; 
+    public float stoppingForce = 5;
+    public float maxjump = 2;
+    public float mulltijump = 2;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
@@ -67,13 +69,22 @@ public class PlayerMotor : MonoBehaviour
         if (canJump)
         {
             rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            canJump = false;
+            if (mulltijump > 0)
+            {
+                mulltijump--;
+            }
+            else if (mulltijump == 0)
+            {
+                canJump = false;
+            }
+            
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         canJump = true;
+        mulltijump = maxjump;
     }
 }
     
