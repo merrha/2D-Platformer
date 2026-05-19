@@ -12,19 +12,39 @@ public class PlayerMotor : MonoBehaviour
     public float stoppingForce = 5;
     public float maxjump = 2;
     public float mulltijump = 2;
+    private Animator animator;
+
+    private float initXScale;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
         rigidbody2D = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        initXScale = transform.localScale.x;
     }
     // Update is called once per frame
     private void FixedUpdate()
     {
-       PlayerMove();
-       HandleMaxSpeed();
-       PlayerStopping();
+        PlayerMove();
+        HandleMaxSpeed();
+        PlayerStopping();
+        if (direction.x != 0)
+        {
 
-        
+            animator.SetBool("is moving", true);
+        }
+        else
+        {
+            animator.SetBool("is moving", false);
+        }
+        if (direction.x > 0)
+        {
+            transform.localScale = new Vector3(initXScale, transform.localScale.y,transform.localScale.z );
+        }
+        else if(direction.x < 0)
+        {
+            transform.localScale = new Vector3(-initXScale, transform.localScale.y, transform.localScale.z);
+        }
     }
 
     private void PlayerMove()
