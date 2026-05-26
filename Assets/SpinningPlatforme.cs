@@ -18,7 +18,7 @@ public class SpinningPlatforme : MonoBehaviour
 
         float RateOfSpeed = TurnSpeed;
 
-        myAngel += RateOfSpeed = Time.deltaTime * direction;
+        myAngel += RateOfSpeed * Time.deltaTime * direction;
 
 
         transform.rotation = Quaternion.Euler(0, 0,myAngel );
